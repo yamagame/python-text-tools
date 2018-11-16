@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import sys,os,re,copy
+from filter import blackList
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
@@ -19,6 +20,12 @@ for line in sys.stdin:
       for cnt, l in enumerate(fp):
         mo = r.search(l)
         if mo != None:
+          word = mo.group(1)
+          if blackList(word, mo): continue
+          if mo.group(2) == '記号': continue
+          if mo.group(2) == '名詞' and mo.group(1) == '．': continue
+          if mo.group(2) == '名詞' and mo.group(3) == '数': continue
+          if mo.group(2) == '助詞': continue
           p.append(mo.group(1))
           p = p[-N:]
           q = copy.deepcopy(p)

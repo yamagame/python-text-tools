@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import sys,os
 import subprocess
 import json
@@ -23,11 +23,13 @@ for line in sys.stdin:
     def doMecab(key):
       techSolution = root[key]
       for line in techSolution.split('。'):
-        ps = subprocess.Popen(('echo', line), stdout=subprocess.PIPE)
-        output = subprocess.check_output(('/usr/local/bin/mecab'), stdin=ps.stdout)
-        #print(output.decode('utf8'))
-        fh.write(output.decode('utf8')+'\n')
-        ps.wait()
+        if line.strip() != '':
+          #print(':'+line.strip())
+          ps = subprocess.Popen(('echo', line.strip()+'。'), stdout=subprocess.PIPE)
+          output = subprocess.check_output(['/usr/bin/env', 'mecab', '-b', '32768'], stdin=ps.stdout)
+          #print(':'+output.decode('utf8'))
+          fh.write(output.decode('utf8')+'\n')
+          ps.wait()
 
     doMecab('tech-problem')
     doMecab('background-art')

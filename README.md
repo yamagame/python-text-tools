@@ -48,6 +48,10 @@
 
   - cd
 
+  - xargs
+
+  - paste
+
 #### UNIXコマンド使用例
   
   JPH_2018042 ディレクトリに含まれている、拡張子が pdf のファイルのファイルサイズの合計を計算する例です。
@@ -60,7 +64,7 @@
 
   - readdir.py
 
-    ディレクトリの中にあるある拡張子のファイルのリストを作成。
+    ディレクトリの中にある、指定した拡張子のファイルのリストを作成。
     拡張子は引数で指定可。
 
     find . -name '*.xml' と同意。
@@ -78,7 +82,7 @@
           :
     ```
 
-  - xml2json.py
+  - xml2json.py (*.xml => *.json)
 
     xmlファイルをjson形式に変換
 
@@ -122,7 +126,7 @@
       }
     ```
 
-  - mecab.py
+  - mecab.py (*.json => *.mecab)
 
     json形式になったデータに含まれる文字列を形態素解析する。
 
@@ -153,7 +157,7 @@
           :
     ```
 
-  - frequency.py
+  - frequency.py (*.mecab => *.freq/*.gfrq)
 
     文書に含まれている単語の頻度リストを作成する。
 
@@ -162,6 +166,12 @@
     ```
 
     変換結果は、入力ファイルと同じ場所に、拡張子 .freq で保存される。
+
+    全ファイルの集計データは、 /tmp/frequency.gfrq に保存される。引数を指定すると保存先を変更できる。
+
+    ```
+      $ ./readdir.py mecab ./[ディレクトリ] | ./frequency.py alldata.gfrq
+    ```
 
     実行例
 
@@ -188,7 +198,7 @@
 
     ※ tf値 = その単語のそのドキュメントでの出現回数 / そのドキュメントで出現したすべての単語の総数
 
-  - ngram.py
+  - ngram.py (*.mecab => *.*gram)
 
     文書に含まれている単語のnグラムリストを作成する。N値のデフォルトは2。
 
@@ -224,8 +234,38 @@
           :
     ```
 
-## ToDo
+  - top-ngram.py (*.*gram => 標準出力)
 
-  - ビジュアライズ
-  - UNIXコマンド マニュアル
+    上位の単語を抜き出して一覧表にする。抜き出した単語は「/」区切りで連結される。
 
+  - top-words.py (*.tfidf => 標準出力)
+
+    tfidf上位の単語を抜き出して一覧表にする。
+
+  - top-tfidf.py (*.tfidf => 標準出力)
+
+    tfidf上位の単語を抜き出して、文字数、TF-IDF値を含めて一覧表にする。
+
+  - co-occurrence.py (top-words.py => 標準出力)
+
+    共起テーブルを作成する。
+
+  - calc-tfidf.py ( *.freq/ *.gfrq => *.tfidf)
+
+    頻度データから TF-IDF 値を計算する。
+
+  - cross-tfidf.py (top-words.py / top-tfidf.py => 標準出力)
+
+    TF-IDFのクロス集計を行う。
+
+  - cross-count.py (top-ngram.py / top-words.py / top-tfidf.py => 標準出力)
+
+    文字数のクロス集計を行う。
+
+  - coressp-analysis.py (cross-tfidf.py => cross-tfidf.py)
+
+    対応分析を行う。
+
+  - principal-comp.py
+
+    主成分分析を行う。
