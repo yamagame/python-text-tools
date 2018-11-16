@@ -8,6 +8,7 @@ signal(SIGPIPE, SIG_DFL)
 #stdout: 頻度リスト
 
 freqData = sys.argv[1] if len(sys.argv) >= 2 else '/tmp/frequency.gfrq'
+T = 1
 
 r = re.compile(r'(.+)\t(.+),(.+),(.+),(.+),(.+),(.+),(.+),(.+),(.+)')
 
@@ -35,6 +36,8 @@ for line in sys.stdin:
               'raw': mo,
               'str': mo.group(1),
             }
+          m[mo.group(1)]['count'] += 1
+          if m[mo.group(1)]['count'] == T:
             if mo.group(1) not in totalword:
               totalword[mo.group(1)] = {
                 'count': 0,
@@ -42,7 +45,6 @@ for line in sys.stdin:
                 'str': mo.group(1),
               }
             totalword[mo.group(1)]['count'] += 1
-          m[mo.group(1)]['count'] += 1
           total += 1
     h = []
     for k in m.keys():
