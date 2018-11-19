@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys,os,re
 from filter import blackList
 from signal import signal, SIGPIPE, SIG_DFL

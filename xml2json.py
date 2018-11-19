@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys,os
 import xml.etree.ElementTree as ET
 import json

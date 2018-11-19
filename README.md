@@ -2,6 +2,18 @@
 
   XML形式の特許文書データを分析するためのサンプルコードです。
 
+## 準備
+
+  ```
+    $ pip3 install numpy pandas mca
+  ```
+
+  以下、お好みで。
+
+  ```
+    $ pip3 install scipy matplotlib scikit-learn tensorflow
+  ```
+
 ## 使用する文書
 
   下記URLからダウンロードした特許文書を使用します。
