@@ -21,7 +21,7 @@ for line in sys.stdin:
           #mo.sort()
           c = '\t' if o != '' else ''
           o = o + c + '/'.join(mo)
-          if W == None or mo.group(1) == W:
+          if W == None or W in mo:
             f = True
     if f: print(o)
   except StopIteration:

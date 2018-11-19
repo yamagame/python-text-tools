@@ -4,6 +4,8 @@ import json
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
+N = int(sys.argv[1]) if len(sys.argv) >= 2 else 2
+
 re_r = re.compile(r'(.+?)\t(.+)')
 re_q = re.compile(r'(.+)\((.+)\)')
 re_s = re.compile(r'(.+),(.+)')
@@ -53,7 +55,7 @@ for line in sys.stdin:
     })
 
 wordarray.sort(key=lambda x: x['count'], reverse=True)
-wordarray = [x for x in wordarray if x['count'] > 1]
+wordarray = [x for x in wordarray if x['count'] >= N]
 
 header = ''
 for i,v in enumerate(wordarray):

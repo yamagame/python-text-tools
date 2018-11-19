@@ -20,7 +20,6 @@ def DataFrame(csvFile):
     return adata
   else:
     adata = pandas.read_table(csvFile, skiprows=0, index_col=0, sep=separator)
-    print(adata)
     return adata
 
 df = DataFrame(csvFile)
@@ -31,6 +30,8 @@ result_row = pandas.DataFrame(mca_ben.fs_r(N=2))
 result_row.index = list(df.index)
 
 result_row.to_csv(sys.stdout, sep='\t', encoding='utf-8', header=False)
+
+print('')
 
 result_col = pandas.DataFrame(mca_ben.fs_c(N=2))
 result_col.index = list(df.columns)
