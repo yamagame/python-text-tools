@@ -4,10 +4,6 @@ from filter import blackList
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
-#argument: N値
-#stdin: 形態素解析結果のファイルパス
-#stdout: 頻度リスト
-
 N = int(sys.argv[1]) if len(sys.argv) >= 2 else 2
 
 r = re.compile(r'(.+)\t(.+),(.+),(.+),(.+),(.+),(.+),(.+),(.+),(.+)')

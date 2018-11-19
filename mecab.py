@@ -5,9 +5,6 @@ import json
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
-#stdin: JSONファイル(UTF8)
-#stdout: 形態素解析結果
-
 for line in sys.stdin:
   try:
     file = open(line.strip(),'r')

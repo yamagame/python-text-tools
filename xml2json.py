@@ -5,10 +5,6 @@ import json
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
-#stdin: XMLファイル(EUC)
-#stdout: jsonファイル名
-#file write: jsonファイル(UTF8)
-
 for line in sys.stdin:
   try:
     file = open(line.strip(),'r',-1,'euc_jp')

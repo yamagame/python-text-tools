@@ -4,9 +4,6 @@ from filter import blackList
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
-#stdin: 形態素解析結果のファイルパス
-#stdout: 頻度リスト
-
 freqData = sys.argv[1] if len(sys.argv) >= 2 else '/tmp/frequency.gfrq'
 T = 1
 

@@ -3,12 +3,6 @@ import sys,os,errno
 from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
-#Usage: ./readdir.py [拡張子] [探索ディレクトリ]
-#argument: 探索ディレクトリ
-#stdout: 拡張子が.xmlのファイルパス
-
-#find . -name '*.xml' と同じ
-
 path = sys.argv[2] if len(sys.argv) >= 3 else '.'
 ext  = sys.argv[1] if len(sys.argv) >= 2 else 'xml'
 
