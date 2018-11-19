@@ -11,4 +11,10 @@ def blackList(word, mo):
   ]
   if word in ignoreWords: return True
   if len(word) == 1 and ("あ" <= word[0] <= "ん"): return True
+
+  if mo.group(2) == '記号': return True
+  if mo.group(2) == '名詞' and mo.group(1) == '．': return True
+  if mo.group(2) == '名詞' and mo.group(3) == '数': return True
+  if mo.group(2) == '助詞': return True
+
   return False

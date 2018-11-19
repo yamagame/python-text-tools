@@ -5,13 +5,27 @@
 ## 準備
 
   ```
-    $ pip3 install numpy pandas mca
+    $ sudo apt update
+    $ sudo apt install python3-dev python3-pip
+    $ sudo apt install libatlas-base-dev        # required for numpy
+    $ sudo pip3 install -U virtualenv 
+  ```
+
+  ```
+    $ virtualenv --system-site-packages -p python3 ./venv
+    $ source ./venv/bin/activate
+    $ pip install --upgrade pip
+    $ deactivate
+  ```
+
+  ```
+    $ pip install mca numpy scipy pandas
   ```
 
   以下、お好みで。
 
   ```
-    $ pip3 install scipy matplotlib scikit-learn tensorflow
+    $ pip install matplotlib scikit-learn tensorflow
   ```
 
 ## 使用する文書
@@ -384,7 +398,7 @@
     top-tfidf.py の出力を入力に繋ぐと、TF-IDF値をクロス集計する。
 
     ```
-      $ ./readdir.py tfidf ./JPH_2018042/ | head -n 10 | ./top-tfidf.py 5 | ./cross-tfidf.py 2
+      $ ./readdir.py tfidf ./JPH_2018042/ | ./top-tfidf.py 5 | ./cross-tfidf.py 2
         送信	シール	光
       ./JPH_2018042/0006409217.tfidf	0.09687640378650529	0	0
       ./JPH_2018042/0006409984.tfidf	0	0.06925103437854474	0
@@ -395,7 +409,7 @@
     top-words.py の出力を入力に繋ぐと、出現したかどうかを示すの0/1値をクロス集計する。1が含まれている、0が含まれていないを意味する。
 
     ```
-      $ ./readdir.py tfidf ./JPH_2018042/ | head -n 10 | ./top-words.py 5 | ./cross-tfidf.py 2
+      $ ./readdir.py tfidf ./JPH_2018042/ | ./top-words.py 5 | ./cross-tfidf.py 2
         送信	シール	光
       ./JPH_2018042/0006409217.tfidf	1	0	0
       ./JPH_2018042/0006409984.tfidf	0	1	0
@@ -418,7 +432,7 @@
     top-tfidf.py の出力を入力に繋ぐと、TF-IDF値をクロス集計する。
 
     ```
-      $ ./readdir.py tfidf ./JPH_2018042/ | head -n 10 | ./top-tfidf.py 5 | ./cross-count.py 2
+      $ ./readdir.py tfidf ./JPH_2018042/ | ./top-tfidf.py 5 | ./cross-count.py 2
         送信	シール	光
       ./JPH_2018042/0006409217.tfidf	249	0	0
       ./JPH_2018042/0006409984.tfidf	0	47	0
@@ -429,7 +443,7 @@
     top-words.py の出力を入力に繋ぐと、出現したかどうかを示すの0/1値をクロス集計する。1が含まれている、0が含まれていないを意味する。
 
     ```
-      $ ./readdir.py tfidf ./JPH_2018042/ | head -n 10 | ./top-words.py 5 | ./cross-count.py 2
+      $ ./readdir.py tfidf ./JPH_2018042/ | ./top-words.py 5 | ./cross-count.py 2
         送信	シール	光
       ./JPH_2018042/0006409217.tfidf	1	0	0
       ./JPH_2018042/0006409984.tfidf	0	1	0
@@ -437,28 +451,46 @@
           :
     ```
 
-  - coressp-analysis.py (cross-tfidf.py => cross-tfidf.py)
+  - coressp-analysis.py (cross-tfidf.py => 標準出力)
 
     対応分析を行う。
 
     実行例
 
     ```
-      $ ./readdir.py tfidf ./JPH_2018042/ | head -n 10 | ./top-tfidf.py 5 | ./cross-tfidf.py 2 | ./coressp-analysis.py 
-      0006409217.tfidf	1.9184934216340054e-16	-1.5328079936990269
-      0006409984.tfidf	1.2772748630295043	0.6523974327578768
-      0006410188.tfidf	0.0	0.0
-      0006411382.tfidf	0.0	0.0
-      0006411893.tfidf	0.0	0.0
-      0006412514.tfidf	-1.1161437929559686	0.6523974327578764
-      0006413009.tfidf	-1.1161437929559679	0.6523974327578762
-      0006413010.tfidf	0.0	0.0
-      0006413053.tfidf	1.2772748630295048	0.6523974327578769
-      0006413054.tfidf	3.219490016069472e-16	-1.5328079936990262
+      $ ./readdir.py tfidf ./JPH_2018042/ | ./top-tfidf.py | ./cross-tfidf.py | ./coressp-analysis.py 
+      0006409217.tfidf	-0.6648901553984891	1.1232943547029592
+      0006409984.tfidf	-1.1717637684915905	-1.0615124142476513
+      0006410188.tfidf	0.516438001581472	0.10101242162872236
+      0006411382.tfidf	-0.7214362539231878	-1.1796216799050439
+          :
 
-      送信	2.633261529935625e-16	-1.532807993699027
-      シール	1.2772748630295052	0.6523974327578769
-      光	-1.116143792955968	0.6523974327578764
+      前記	-0.4913340670353276	1.1185125769480315
+      部	-1.1573028109940138	-0.9195108769644732
+      物	1.1053169981547994	-0.2901934889289371
+      化合	1.1295766101354086	-0.26751985267725564
+          :
+    ```
+
+  - coressp-sort.py (coressp-analysis.py => 標準出力)
+
+    対応分析の結果を指定したキーに近い順に並べかえる。
+
+    実行例
+
+    ```
+      $ ./readdir.py tfidf ./JPH_2018042/ | ./top-tfidf.py | ./cross-tfidf.py | ./coressp-analysis.py | ./coressp-sort.py 0006411893.tfidf
+      0006411893.tfidf	1.1954429856018303	-0.7754237779673789
+      0006413010.tfidf	1.2914730629284286	-0.6156001748682306
+      0006410188.tfidf	0.516438001581472	0.10101242162872236
+      0006413009.tfidf	0.8812942583491514	0.3368825334323084
+          :
+      
+      投与	1.335085870672188	-0.8639635652941883
+      ｍｇ	1.349127811091992	-0.8382526456734829
+      治療	1.3684337892775233	-0.8029032254019582
+      用量	1.3706696590465755	-0.7988093276787229
+          :
     ```
 
   - principal-comp.py

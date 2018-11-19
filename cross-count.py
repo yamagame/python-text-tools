@@ -50,7 +50,7 @@ for line in sys.stdin:
         }
 
     docarray.append({
-      'fname': mo[1],
+      'fname': mo.group(1),
       'doc': doc,
     })
 
