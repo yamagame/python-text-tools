@@ -4,19 +4,34 @@
 
 ## 準備
 
+  virtualenvを使う場合
+
   ```
     $ sudo apt update
     $ sudo apt install python3-dev python3-pip
-    $ sudo apt install libatlas-base-dev        # required for numpy
+    $ sudo apt install libatlas-base-dev        # numpyの為に必要
     $ sudo pip3 install -U virtualenv 
   ```
 
+  環境作成
+
   ```
     $ virtualenv --system-site-packages -p python3 ./venv
-    $ source ./venv/bin/activate
-    $ pip install --upgrade pip
-    $ deactivate
   ```
+
+  環境を有効にする
+
+  ```
+    $ source ./venv/bin/activate
+  ```
+
+  pipをバージョンアップする。
+
+  ```
+    $ pip install --upgrade pip
+  ```
+
+  必要なモジュールをインストール
 
   ```
     $ pip install mca numpy scipy pandas
@@ -26,6 +41,12 @@
 
   ```
     $ pip install matplotlib scikit-learn tensorflow
+  ```
+
+  環境から離脱する場合は以下のコマンドを入力する。
+
+  ```
+  $ deactivate
   ```
 
 ## 使用する文書
